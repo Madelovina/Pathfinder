@@ -50,21 +50,6 @@ function calculateMaze(mArray, start, end) {
         }
     }
 
-    while (!samePos(current, end)) {
-        var neighbors = getNeighbors(current, open);
-        if (neighbors.length == 0) {
-            current = vertices.pop();
-        }
-        var target = lowestCost(neighbors);
-        if (isVertex(current)) {
-            vertices.push(target);
-        }
-
-        closeNode(target, open, closed);
-        current = target;
-
-    }
-    
     
 
     console.log("open", open);
