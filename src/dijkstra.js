@@ -8,35 +8,32 @@ var methods = {
                     start.x,
                     start.y,
                     0,
-                    new Node(start.x, start.y, 0, null)
+                    new Node(start.x, start.y, 0, { x: -1, y: -1 })
                 ),
             ],
             function (a, b) {
                 return a.weight - b.weight;
             }
         ); // create empty array of pre-evaluated positions
-        var closed = [
-            new Node(start.x, start.y, 0, new Node(start.x, start.y, 0, null)),
-        ]; // create array of evaluated positions
+        var closed = new TinyQueue([], function (a, b) {
+            return a.weight - b.weight;
+        }); // create array of evaluated positions
 
-        var sn = new Node(
-            start.x,
-            start.y,
-            0,
-            new Node(start.x, start.y, 0, null)
-        );
-        console.log(pqContains(open, sn));
+        var current = open.peek();
+        while (current.x != end.x && current.y != end.y) {
+            current = open.peek();
+            open.pop();
+            var neighbors = getNeighbors(maze, current);
+            for (var i = 0; i < neighbors.length; i++) {
+                var node = new Node(neighbors[i].x, neighbors[i].y, 1, current);
+                if (!pqContains(open, node) && !pqContains(closed, node))
+                    open.push(node);
+            }
+            closed.push(current);
+        }
 
-        open.pop(); // Pops the temporary node
-
-        // var current = start;
-        // while (current != end) {
-        //     var neighbors = getNeighbors(maze, current);
-        //     for (var i = 0; i < neighbors.length; i++) {
-        //         var node = new Node(neighbors[i].x, neighbors[i].y, 1, current);
-        //         //if()
-        //     }
-        // }
+        console.log(current);
+        console.log(open);
     },
 };
 
@@ -49,7 +46,7 @@ function getNeighbors(maze, current) {
     neighbors.push({ x: current.x - 1, y: current.y });
     neighbors.push({ x: current.x, y: current.y + 1 });
 
-    for (var i = 0; i < neighbors.length; i++)
+    for (var i = 0; i < neighbors.length; i++) {
         if (neighbors[i].x < 0 || neighbors[i].x >= maze.length) {
             neighbors.splice(i, 1);
             i--;
@@ -60,6 +57,7 @@ function getNeighbors(maze, current) {
             neighbors.splice(i, 1);
             i--;
         }
+    }
 
     return neighbors;
 }
