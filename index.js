@@ -27,8 +27,8 @@ function readMaze() {
             "path.txt",
             astar.data.dijkstraCalculateMaze(
                 maze,
-                { x: 0, y: 39 },
-                { x: 22, y: 39 }
+                { x: 1, y: 1 },
+                { x: 19, y: 79 }
             ),
             (err) => test
         );

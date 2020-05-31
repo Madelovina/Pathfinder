@@ -25,7 +25,12 @@ var methods = {
             open.pop();
             var neighbors = getNeighbors(maze, current);
             for (var i = 0; i < neighbors.length; i++) {
-                var node = new Node(neighbors[i].x, neighbors[i].y, 1, current);
+                var node = new Node(
+                    neighbors[i].x,
+                    neighbors[i].y,
+                    1 + current.weight,
+                    current
+                );
                 if (!(pqContains(open, node) || pqContains(closed, node)))
                     open.push(node);
             }
@@ -34,7 +39,7 @@ var methods = {
 
         var path = [];
         var step = pqGet(closed, end.x, end.y);
-        while (step.x != start.x) {
+        while (!(step.x == start.x && step.y == start.y)) {
             path.push(step);
             step = pqGet(closed, step.parent.x, step.parent.y);
         }
