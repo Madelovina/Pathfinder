@@ -18,7 +18,21 @@ function readMaze() {
                 }
             }
         }
-        astar.data.dijkstraCalculateMaze(maze, { x: 1, y: 0 }, { x: 11, y: 5 }); // calculate best path
+        maze.push(array);
+
+        var test = function (err) {
+            throw err;
+        };
+        fs.writeFile(
+            "path.txt",
+            astar.data.dijkstraCalculateMaze(
+                maze,
+                { x: 0, y: 1 },
+                { x: 5, y: 11 }
+            ),
+            (err) => test
+        );
+        // calculate best path
     });
 }
 

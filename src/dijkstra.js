@@ -20,25 +20,43 @@ var methods = {
         }); // create array of evaluated positions
 
         var current = open.peek();
-        while (current.x != end.x && current.y != end.y) {
+        while (!(current.x == end.x && current.y == end.y)) {
             current = open.peek();
             open.pop();
             var neighbors = getNeighbors(maze, current);
             for (var i = 0; i < neighbors.length; i++) {
                 var node = new Node(neighbors[i].x, neighbors[i].y, 1, current);
-                if (!pqContains(open, node) && !pqContains(closed, node))
+                if (!(pqContains(open, node) || pqContains(closed, node)))
                     open.push(node);
             }
             closed.push(current);
         }
 
-        console.log(current);
-        console.log(open);
+        var path = [];
+        var step = pqGet(closed, end.x, end.y);
+        while (step.x != start.x) {
+            path.push(step);
+            step = pqGet(closed, step.parent.x, step.parent.y);
+        }
+
+        var data = "";
+
+        for (var i = 0; i < maze.length; i++) {
+            for (var j = 0; j < maze[0].length; j++)
+                if (i == start.x && j == start.y) data += "S";
+                else if (i == end.x && j == end.y) data += "E";
+                else if (containArray(path, i, j)) data += "P";
+                else data += maze[i][j];
+            data += "\n";
+        }
+
+        return data;
     },
 };
 
 function getNeighbors(maze, current) {
     var neighbors = [];
+    var final = [];
 
     // Adds the node that is above, to the right, below, and to the left
     neighbors.push({ x: current.x, y: current.y - 1 });
@@ -47,19 +65,15 @@ function getNeighbors(maze, current) {
     neighbors.push({ x: current.x, y: current.y + 1 });
 
     for (var i = 0; i < neighbors.length; i++) {
-        if (neighbors[i].x < 0 || neighbors[i].x >= maze.length) {
-            neighbors.splice(i, 1);
-            i--;
-        } else if (neighbors[i].y < 0 || neighbors[i].y >= maze[0].length) {
-            neighbors.splice(i, 1);
-            i--;
-        } else if (maze[neighbors[i].x][neighbors[i].y] != 0) {
-            neighbors.splice(i, 1);
-            i--;
-        }
+        if (
+            !(neighbors[i].x < 0 || neighbors[i].x >= maze.length) &&
+            !(neighbors[i].y < 0 || neighbors[i].y >= maze[0].length) &&
+            maze[neighbors[i].x][neighbors[i].y] == 0
+        )
+            final.push(neighbors[i]);
     }
 
-    return neighbors;
+    return final;
 }
 
 function pqContains(pq, node) {
@@ -67,6 +81,19 @@ function pqContains(pq, node) {
     for (var i = 0; i < items.length; i++) {
         if (items[i].compare(node)) return true;
     }
+    return false;
+}
+
+function pqGet(pq, x, y) {
+    var items = pq.data;
+    for (var i = 0; i < items.length; i++) {
+        if (items[i].x == x && items[i].y == y) return items[i];
+    }
+}
+
+function containArray(arr, x, y) {
+    for (var i = 0; i < arr.length; i++)
+        if (arr[i].x == x && arr[i].y == y) return true;
     return false;
 }
 
@@ -81,10 +108,10 @@ class Node {
     compare(node) {
         if (
             this.x == node.x &&
-            this.y == node.y &&
-            this.weight == node.weight &&
-            this.parent.x == node.parent.x &&
-            this.parent.y == node.parent.y
+            this.y == node.y // &&
+            // this.weight == node.weight &&
+            // this.parent.x == node.parent.x &&
+            // this.parent.y == node.parent.y
         )
             return true;
         return false;
