@@ -1,5 +1,5 @@
 const fs = require("fs");
-var astar = require("./src/dijkstra.js");
+const dijkstra = require("./src/dijkstra.js");
 
 function readMaze() {
     var maze = [];
@@ -25,7 +25,7 @@ function readMaze() {
         };
         fs.writeFile(
             "path.txt",
-            astar.data.dijkstraCalculateMaze(
+            dijkstra.data.dijkstraCalculateMaze(
                 maze,
                 { x: 1, y: 1 },
                 { x: 19, y: 79 }

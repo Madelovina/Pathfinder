@@ -1,4 +1,5 @@
 const TinyQueue = require("tinyqueue");
+const Node = require("./node.js");
 
 var methods = {
     dijkstraCalculateMaze: function (maze, start, end) {
@@ -100,27 +101,6 @@ function containArray(arr, x, y) {
     for (var i = 0; i < arr.length; i++)
         if (arr[i].x == x && arr[i].y == y) return true;
     return false;
-}
-
-class Node {
-    constructor(X, Y, W, P) {
-        this.x = X;
-        this.y = Y;
-        this.weight = W;
-        this.parent = P;
-    }
-
-    compare(node) {
-        if (
-            this.x == node.x &&
-            this.y == node.y // &&
-            // this.weight == node.weight &&
-            // this.parent.x == node.parent.x &&
-            // this.parent.y == node.parent.y
-        )
-            return true;
-        return false;
-    }
 }
 
 exports.data = methods;

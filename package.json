@@ -1,0 +1,24 @@
+{
+    "name": "pathfinder",
+    "version": "1.0.0",
+    "description": "The whale got lost 🙁",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Madelovina/Pathfinder.git"
+    },
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Madelovina/Pathfinder/issues"
+    },
+    "homepage": "https://github.com/Madelovina/Pathfinder#readme",
+    "dependencies": {
+        "file-system": "^2.2.2",
+        "tinyqueue": "^2.0.3"
+    },
+    "type": "module"
+}
