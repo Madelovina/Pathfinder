@@ -2,7 +2,7 @@ const TinyQueue = require("tinyqueue");
 const Node = require("./node.js");
 
 var methods = {
-    dijkstraCalculateMaze: function (maze, start, end) {
+    dijkstraCalculateMaze: function (maze, start, end, weightFunction) {
         var open = new TinyQueue(
             [
                 new Node(
@@ -29,7 +29,7 @@ var methods = {
                 var node = new Node(
                     neighbors[i].x,
                     neighbors[i].y,
-                    1 + current.weight,
+                    weightFunction(current, end),
                     current
                 );
                 if (!(pqContains(open, node) || pqContains(closed, node)))
@@ -56,7 +56,12 @@ var methods = {
             data += "\n";
         }
 
+        data += "\nNumber of Steps: " + (path.length + 1);
+
         return data;
+    },
+    getWeight: function (node, end) {
+        return 1 + node.weight;
     },
 };
 
