@@ -4,11 +4,13 @@ The whale got lost 🙁
 
 ## About
 
-Pathfinder utilizes Dijkstra's Algorithm to find the shortest path from one point to another in:
+Pathfinder utilizes Dijkstra's Algorithm and A\* to find the shortest path from one point to another in:
 
 -   Coordinate planes
 -   Grids
 -   Mazes
+
+Pathfinder also Kruskal's Algorithm to generate the random maze to be solved.
 
 ## Inspired by
 
