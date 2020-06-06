@@ -1,6 +1,7 @@
 const fs = require("fs");
 const dijkstra = require("./src/dijkstra.js");
 const astar = require("./src/astar.js");
+const generator = require("./src/kruskal.js");
 
 function readMaze() {
     var maze = [];
@@ -29,9 +30,9 @@ function readMaze() {
             "path.txt",
             dijkstra.data.dijkstraCalculateMaze(
                 maze,
-                { x: 1, y: 1 },
-                { x: 19, y: 79 },
-                dijkstra.data.getWeight
+                { x: 0, y: 1 },
+                { x: 50, y: 49 },
+                astar.data.getWeight
             ),
             (err) => test
         );
@@ -39,4 +40,13 @@ function readMaze() {
     });
 }
 
+function generateMaze() {
+    var test = function (err) {
+        throw err;
+    };
+
+    fs.writeFile("maze.txt", generator.data.genMaze(), (err) => test);
+}
+
+generateMaze();
 readMaze();

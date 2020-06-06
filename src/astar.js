@@ -1,5 +1,3 @@
-require("./node.js");
-
 var methods = {
     getWeight: function (node, end) {
         return (

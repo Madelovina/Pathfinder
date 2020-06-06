@@ -52,11 +52,11 @@ var methods = {
                 if (i == start.x && j == start.y) data += "S";
                 else if (i == end.x && j == end.y) data += "E";
                 else if (containArray(path, i, j)) data += "P";
-                else data += maze[i][j];
+                else if (!isNaN(maze[i][j])) data += maze[i][j];
             data += "\n";
         }
 
-        data += "\nNumber of Steps: " + (path.length + 1);
+        data += "Number of Steps: " + (path.length + 1);
 
         return data;
     },
